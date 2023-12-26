@@ -20,8 +20,8 @@
 name: Build release wheels
 on:
   push:
-    tags:
-      - '*'
+    branches:
+      - 'test-ci'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
@@ -30,6 +30,7 @@ concurrency:
 jobs:
 
   linux-wheel:
+    if: ${{ false }}
     name: Wheel ${{matrix.image.name}} - Py ${{matrix.python.version}} - ${{matrix.cpu.platform}}
     runs-on: ubuntu-22.04
     timeout-minutes: 300
@@ -103,11 +104,6 @@ jobs:
       fail-fast: false
       matrix:
         py:
-          - {version: '3.7', version_long:  '3.7.15'}
-          - {version: '3.8', version_long:  '3.8.13'}
-          - {version: '3.9', version_long:  '3.9.14'}
-          - {version: '3.10', version_long:  '3.10.7'}
-          - {version: '3.11', version_long:  '3.11.1'}
           - {version: '3.12', version_long:  '3.12.0'}
 
     steps:
@@ -156,11 +152,6 @@ jobs:
       fail-fast: false
       matrix:
         python:
-          - {version: '3.7'}
-          - {version: '3.8'}
-          - {version: '3.9'}
-          - {version: '3.10'}
-          - {version: '3.11'}
           - {version: '3.12'}
 
     steps:
